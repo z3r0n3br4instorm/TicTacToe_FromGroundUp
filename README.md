@@ -5,4 +5,4 @@ Prediction system isn't very optimal. And also took some shortcuts when coding i
 It should and can be improved very much.
 The part where the winner is determined is also not coded yet, so you can play the game even if you or the CPU won :)
 
-[How does this abomination work ?] how_de_thing_do_de_thing.pdf
+[https://github.com/z3r0n3br4instorm/TicTacToe_FromGroundUp/edit/main/](how_de_thing_do_de_thing.pdf)
