@@ -253,6 +253,7 @@ void gameEngine(){
                         }        
                     }
                 }
+                //gameMode - block player's move [TODO]
             }
         }
     }
