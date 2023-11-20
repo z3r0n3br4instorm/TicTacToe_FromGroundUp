@@ -32,6 +32,36 @@ int initDisplay(char boxSet[9]) {
     return getUserInput;
 }
 
+void placeDot3in(int x, int y, int z, int inhibitor[9], char boxSet[9]){
+    int skiP = 0;
+    int CPUchoose = 0;
+    while (skiP != 1){
+        CPUchoose = getRandomNumber3(x,y,z);
+        if (inhibitor[CPUchoose] == 0) {
+            boxSet[CPUchoose] = 'o';
+            inhibitor[CPUchoose] = 2;
+            skiP = 1;
+        }else{
+            skiP = 0;
+        }
+    }
+}
+
+void placeDot2in(int x, int y, int inhibitor[9], char boxSet[9]){
+    int CPUchoose = 0;
+    int skiP = 0;
+    while (skiP != 1){
+        CPUchoose = returnRandomNumber(x,y);
+        if (inhibitor[CPUchoose] == 0) {
+            boxSet[CPUchoose] = 'o';
+            inhibitor[CPUchoose] = 2;
+            skiP = 1;
+        }else{
+            skiP = 0;
+        }
+    }
+}
+
 void gameEngine(){
     int inhibitor[9] = {0,0,0,0,0,0,0,0,0};//initializing inhibitors
     int playerChoose = 0;//initializing Player Selection Variable
@@ -65,7 +95,7 @@ void gameEngine(){
                 inhibitor[CPUchoose] = 2;
             }
         } else { // Calulating Probability to be able to win
-            for(int i = 0; i < 9; i++){
+            for(int i = 0; i < 9; i++) {
                 if (inhibitor[i] == 2){
                     //Horizontal Total
                     if (i < 3){
@@ -183,152 +213,43 @@ void gameEngine(){
                 DrawD ++;
             }
             if (DrawD == DrawH && DrawH == DrawV){
-                while (skiP != 1){
-                    CPUchoose = returnRandomNumber(0,8);
-                    if (inhibitor[CPUchoose] == 0) {
-                        boxSet[CPUchoose] = 'o';
-                        inhibitor[CPUchoose] = 2;
-                        skiP = 1;
-                    }else{
-                        skiP = 0;
-                    }
-                }
+                placeDot2in(8,2,inhibitor,boxSet);
                 skiP = 0;
             } else  {
+                //GameEngine - Try To win Mode
                 if(maxProberH > maxProberV){
                     if(maxProberD > maxProberH){
                         if (maxProberDA == 0){
-                            while (skiP != 1){
-                                CPUchoose = getRandomNumber3(0,4,8);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot3in(0,4,8,inhibitor,boxSet);
                         } else if (maxProberDA == 1) {
-                            while (skiP != 1){
-                                CPUchoose = getRandomNumber3(2,4,6);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot3in(2,4,6,inhibitor,boxSet);
                         }
                     } else {
                         if (maxProberHA == 0){
-                            while (skiP != 1){
-                                CPUchoose = returnRandomNumber(0,2);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot2in(0,2,inhibitor,boxSet);
                         } else if (maxProberHA == 1) {
-                            while (skiP != 1){
-                                CPUchoose = returnRandomNumber(4,6);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot2in(4,6,inhibitor,boxSet);
                         }
                         else if (maxProberHA == 2) {
-                            while (skiP != 1){
-                                CPUchoose = returnRandomNumber(7,9);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot2in(7,9,inhibitor,boxSet);
                         }
-                            
                     }
                 } else if(maxProberV > maxProberH){
                     if(maxProberD > maxProberV){
                         if (maxProberDA == 0){
-                            while (skiP != 1){
-                                CPUchoose = getRandomNumber3(0,4,8);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
+                            placeDot3in(0,4,8,inhibitor,boxSet);
                             skiP = 0;
                         } else if (maxProberDA == 1) {
-                            CPUchoose = getRandomNumber3(2,4,6);
-                            while (skiP != 1){
-                                CPUchoose = getRandomNumber3(0,4,8);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot3in(2,4,6,inhibitor,boxSet);
                         }
                     } else {
                         if (maxProberVA == 0){
-                            while (skiP != 1){
-                                CPUchoose = getRandomNumber3(0,3,6);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot3in(0,3,6,inhibitor,boxSet);
                         } else if (maxProberVA == 1) {
-                            while (skiP != 1){
-                                CPUchoose = getRandomNumber3(1,4,7);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot3in(1,4,7,inhibitor,boxSet);
                         }
                         else if (maxProberVA == 2) {
-                            while (skiP != 1){
-                                CPUchoose = getRandomNumber3(2,5,8);
-                                if (inhibitor[CPUchoose] == 0) {
-                                    boxSet[CPUchoose] = 'o';
-                                    inhibitor[CPUchoose] = 2;
-                                    skiP = 1;
-                                }else{
-                                    skiP = 0;
-                                }
-                            }
-                            skiP = 0;
+                            placeDot3in(2,5,8,inhibitor,boxSet);
                         }        
                     }
                 }
