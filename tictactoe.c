@@ -23,6 +23,7 @@ int getRandomNumber3(int num1, int num2, int num3) {
     return random_number;
 }
 
+
 int initDisplay(char boxSet[9]) {
     int getUserInput = 0; 
     printf("\nPic Your Input\n%c%c%c\n%c%c%c\n%c%c%c\n >", boxSet[0], boxSet[1], boxSet[2], 
@@ -62,6 +63,51 @@ void placeDot2in(int x, int y, int inhibitor[9], char boxSet[9]){
     }
 }
 
+//GameEngine - Try to win
+void tryToWin(int maxProberH, int maxProberV, int maxProberD, int maxProberDA, int maxProberHA, int maxProberVA, int inhibitor[9], char boxSet[9]){
+    if(maxProberH > maxProberV){
+        if(maxProberD > maxProberH){
+            if (maxProberDA == 0){
+                placeDot3in(0,4,8,inhibitor,boxSet);
+            } else if (maxProberDA == 1) {
+                placeDot3in(2,4,6,inhibitor,boxSet);
+            }
+        } else {
+            if (maxProberHA == 0){
+                placeDot2in(0,3,inhibitor,boxSet);
+            } else if (maxProberHA == 1) {
+                placeDot2in(3,6,inhibitor,boxSet);
+            }
+            else if (maxProberHA == 2) {
+                placeDot2in(6,9,inhibitor,boxSet);
+            }
+        }
+    } else if(maxProberV > maxProberH){
+        if(maxProberD > maxProberV){
+            if (maxProberDA == 0){
+                placeDot3in(0,4,8,inhibitor,boxSet);
+            } else if (maxProberDA == 1) {
+                placeDot3in(2,4,6,inhibitor,boxSet);
+            }
+        } else {
+            if (maxProberVA == 0){
+                placeDot3in(0,3,6,inhibitor,boxSet);
+            } else if (maxProberVA == 1) {
+                placeDot3in(1,4,7,inhibitor,boxSet);
+            }
+            else if (maxProberVA == 2) {
+                placeDot3in(2,5,8,inhibitor,boxSet);
+            }        
+        }
+    }
+}
+
+
+//GameEngine - Try to block opponent's move
+void tryToBlock(int maxProberH, int maxProberV, int maxProberD, int maxProberDA, int maxProberHA, int maxProberVA, int inhibitor[9], int boxSet[9]){
+    //TODO
+}
+
 void gameEngine(){
     int inhibitor[9] = {0,0,0,0,0,0,0,0,0};//initializing inhibitors
     int playerChoose = 0;//initializing Player Selection Variable
@@ -89,7 +135,7 @@ void gameEngine(){
         }
         //Plotting the CPU draw, (if iteration = 0 randomize else calcualte the probability)
         if (i == 0){ //Randomizing the CPU Move for the first iterration
-            CPUchoose = returnRandomNumber(0,8);
+            CPUchoose = returnRandomNumber(0,9);
             if (inhibitor[CPUchoose] == 0) {
                 boxSet[CPUchoose] = 'o';
                 inhibitor[CPUchoose] = 2;
@@ -217,42 +263,7 @@ void gameEngine(){
                 skiP = 0;
             } else  {
                 //GameEngine - Try To win Mode
-                if(maxProberH > maxProberV){
-                    if(maxProberD > maxProberH){
-                        if (maxProberDA == 0){
-                            placeDot3in(0,4,8,inhibitor,boxSet);
-                        } else if (maxProberDA == 1) {
-                            placeDot3in(2,4,6,inhibitor,boxSet);
-                        }
-                    } else {
-                        if (maxProberHA == 0){
-                            placeDot2in(0,2,inhibitor,boxSet);
-                        } else if (maxProberHA == 1) {
-                            placeDot2in(4,6,inhibitor,boxSet);
-                        }
-                        else if (maxProberHA == 2) {
-                            placeDot2in(7,9,inhibitor,boxSet);
-                        }
-                    }
-                } else if(maxProberV > maxProberH){
-                    if(maxProberD > maxProberV){
-                        if (maxProberDA == 0){
-                            placeDot3in(0,4,8,inhibitor,boxSet);
-                            skiP = 0;
-                        } else if (maxProberDA == 1) {
-                            placeDot3in(2,4,6,inhibitor,boxSet);
-                        }
-                    } else {
-                        if (maxProberVA == 0){
-                            placeDot3in(0,3,6,inhibitor,boxSet);
-                        } else if (maxProberVA == 1) {
-                            placeDot3in(1,4,7,inhibitor,boxSet);
-                        }
-                        else if (maxProberVA == 2) {
-                            placeDot3in(2,5,8,inhibitor,boxSet);
-                        }        
-                    }
-                }
+                tryToWin(maxProberH, maxProberV, maxProberD, maxProberDA, maxProberHA, maxProberVA, inhibitor, boxSet);
                 //gameMode - block player's move [TODO]
             }
         }
