@@ -259,6 +259,7 @@ void gameEngine(){
                 DrawD ++;
             }
             if (DrawD == DrawH && DrawH == DrawV){
+                //BRAINDRAW - RANDOMPLACE
                 placeDot2in(8,2,inhibitor,boxSet);
                 skiP = 0;
             } else  {
